@@ -9,7 +9,7 @@ dengan karakter konsisten, lirik tersinkron, dan thumbnail.
 | Peran | Alat | Status |
 |---|---|---|
 | Pengendali utama | Muse (VM ini) | Berjalan |
-| Riset, konsep, storyboard | Gemini | Menunggu API key user |
+| Riset, konsep, storyboard | Gemini | API key BELUM disetujui — menunggu pemeriksaan ketentuan untuk konten anak (keputusan user 20 Nov 2026) |
 | Lirik, naskah, QC | GPT (rencana awal) | Tidak tersedia gratis — perlu keputusan user (alternatif: Gemini) |
 | Kode & workflow | GitHub — repo ini | Berjalan |
 | Penyimpanan hasil | Google Drive | Terhubung 20 Nov 2026 |
@@ -46,7 +46,13 @@ kids-youtube-factory/
 ├── scripts/
 │   ├── production_log.py   # pencatatan produksi
 │   ├── checkpoint.py       # checkpoint & resume
-│   └── test_stage2.py      # pengujian penerimaan Tahap 2
+│   ├── test_stage2.py      # pengujian penerimaan Tahap 2
+│   ├── render_test30.py    # mesin uji video 30 detik (Tahap 3)
+│   ├── render_3d_preview.py # raytracer 3D v0.1 (pembanding)
+│   ├── render_character_bible.py # render Character Bible v1 (Uji 2)
+│   ├── render_rasterizer_v2.py   # rasterizer 3D v2, prototipe (Uji 6)
+│   ├── storyboard.py       # validator storyboard (Uji 7)
+│   └── test_storyboard.py  # uji validator (7 kasus)
 └── templates/
     ├── lyrics_template.md
     ├── storyboard_template.md
@@ -79,10 +85,32 @@ Detail lengkap: [PRODUCTION_WORKFLOW.md](PRODUCTION_WORKFLOW.md).
   tidak boleh mengulang dari nol.
 - **ACE-Step jangan dijalankan** untuk sementara (perintah user 20 Nov 2026);
   folder build 4 GB di `tools/acestep.cpp` jangan dihapus.
-- **Blender jangan dipakai selama Tahap 2** (perintah user 20 Nov 2026).
+- **Blender jangan dijalankan tanpa persetujuan** (perintah user 20 Nov 2026).
+- **Gemini API key BELUM disetujui** — jangan membuat/menyimpan key, jangan
+  aktifkan billing (keputusan user 20 Nov 2026, menunggu pemeriksaan
+  ketentuan untuk konten anak).
+
+## Arah pengembangan (ditetapkan user 20 Nov 2026)
+
+Lihat `~/workspace/youtube-kids/docs/arah-pengembangan.md`. Tujuan: mesin
+editing otomatis video lagu anak kartun 3D berkualitas tinggi. Strategi:
+Python + FFmpeg dipertahankan; rasterizer v2 sebagai kandidat mesin 3D;
+raytracer lama sebagai pembanding; layered animation sebagai pelengkap.
+Tahap: (1) Character Bible, (2) storyboard otomatis, (3) mesin gambar 3D,
+(4) animasi karakter, (5) editing otomatis FFmpeg, (6) Monetization
+Quality Control Agent, (7) uji satu episode lengkap.
 
 ## Status
 
 - Tahap 1 (audit) — SELESAI 20 Nov 2026 ([SYSTEM_STATUS.md](SYSTEM_STATUS.md)).
 - Tahap 2 (persiapan) — SELESAI 20 Nov 2026 (repo ini + pengujian).
 - Tahap 3 (uji video 30 detik) — SELESAI 20 Nov 2026 (gajah biru, 720p + 1080p lolos).
+- Uji 2 (Character Bible v1) — SELESAI 20 Nov 2026: 12 render (3 master +
+  4 ekspresi + 5 pose), 11,3 dtk, RAM ~105 MB. Model lama tidak diubah.
+- Uji 7 (Storyboard Validator) — SELESAI 20 Nov 2026: 7/7 kasus lolos
+  (1 valid + 6 tidak valid ditolak dengan pesan tepat).
+- Uji 6 (Rasterizer v2) — SELESAI 20 Nov 2026: satu frame 640×360,
+  1,33 dtk (verifikasi mandiri) vs raytracer 1,0 dtk, RAM 94 vs 103 MB,
+  selisih piksel rata-rata 0,58/255. LAYAK LANJUT sebagai kandidat,
+  BUKAN standar final (butuh optimasi ke <0,5 dtk/frame).
+- Tahap 4 / produksi episode penuh — BELUM dimulai, menunggu persetujuan user.

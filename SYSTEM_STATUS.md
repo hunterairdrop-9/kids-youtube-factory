@@ -1,6 +1,6 @@
 # SYSTEM_STATUS — AI Kids YouTube Factory
 
-**Terakhir diperiksa:** 20 Nov 2026, 12:31 WIB (Tahap 1 audit) + 12:37 WIB (Tahap 2)
+**Terakhir diperiksa:** 20 Nov 2026, 13:26 WIB (Uji 2, 6, 7)
 **Mesin:** Muse Secure VM — Linux 7.0.0-44-generic x86_64
 
 ## Hasil audit Tahap 1 (A–J)
@@ -27,7 +27,7 @@
 | Git | 2.43.0 | ✅ Terpasang |
 | Pillow | 10.2.0 | ✅ Terpasang |
 | MoviePy | — | ❌ TIDAK dipasang — keputusan Tahap 2: FFmpeg sudah cukup |
-| Blender | 4.0.2 | ✅ Ada di `~/workspace/tools/` (jangan dipakai selama Tahap 2) |
+| Blender | 4.0.2 | ✅ Ada di `~/workspace/tools/` (jangan dijalankan tanpa persetujuan user) |
 | ACE-Step (acestep.cpp) | — | ⏸️ JANGAN dijalankan untuk sementara; folder build 4 GB jangan dihapus |
 
 ## Layanan
@@ -36,7 +36,7 @@
 |---|---|
 | GitHub (hunterairdrop-9) | ✅ Terhubung |
 | Google Drive | ✅ Terhubung 20 Nov 2026 |
-| Gemini API | ⏳ Menunggu API key user (kunci belum ada di vault) |
+| Gemini API | ⏳ BELUM disetujui — jangan buat key, jangan aktifkan billing (keputusan user 20 Nov 2026) |
 | GPT (OpenAI API) | ❌ Tidak tersedia gratis — berbayar, butuh key + izin user |
 | YouTube | ⏳ Channel @stonecrafttt ada; rebrand menunggu keputusan user |
 
@@ -49,6 +49,31 @@
 - Pengujian A–H: 8/8 lolos (durasi, 3 adegan, gerakan, teks tepat waktu,
   audio sinkron, bisa diputar/decode OK, resolusi + ukuran, waktu + RAM).
   8 frame dicek visual langsung.
+
+## Hasil Uji 2, 6, 7 (20 Nov 2026 — fondasi karakter, storyboard, mesin visual)
+
+- **Uji 2 — Character Bible v1 gajah biru** (`scripts/render_character_bible.py`):
+  12 gambar 640×360 (master depan/samping/belakang + 4 ekspresi + 5 pose),
+  total 11,3 dtk (~0,95 dtk/gambar), puncak RAM ~105 MB. Model lama
+  (`render_3d_preview.py`) tidak diubah — varian dibuat pada salinan.
+  Keterbatasan v1: belum ada mulut; pose melambai terbaca seperti belalai
+  tergulung; ekspresi sedih bedanya halus. Aset di
+  `assets/characters/gajah-biru/` (bukan di repo ini).
+- **Uji 7 — Storyboard Validator** (`scripts/storyboard.py` +
+  `scripts/test_storyboard.py`): 7/7 kasus lolos — storyboard contoh
+  EP-TEST01 (6 adegan × 5 dtk) valid; 6 storyboard rusak ditolak dengan
+  pesan tepat (field hilang, durasi tidak cocok, scene_id duplikat,
+  ekspresi tidak ada di Bible, gambar referensi hilang, status tidak
+  dikenal).
+- **Uji 6 — Rasterizer v2** (`scripts/render_rasterizer_v2.py`): satu
+  frame gajah 640×360, mesh 16×24 (17.664 segitiga). Verifikasi mandiri:
+  1,33 dtk, CPU 1,52 dtk, RAM 94,4 MB vs raytracer 1,0 dtk / 102,9 MB
+  (render ulang hari yang sama). Selisih piksel rata-rata 0,58/255.
+  **Tidak lebih cepat dari raytracer di 640×360** (~30% lebih lambat —
+  loop Python per segitiga); lebih cepat ~29% di 1080p (6,13 vs 8,6 dtk)
+  tapi RAM 542 MB melebihi RAM tersedia tipikal. LAYAK LANJUT sebagai
+  kandidat, BUKAN standar final. Self-shadow belum ada; lingkungan
+  belum dirasterisasi.
 
 ## Batasan yang diketahui
 
