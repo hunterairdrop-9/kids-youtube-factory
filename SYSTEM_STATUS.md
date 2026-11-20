@@ -40,6 +40,16 @@
 | GPT (OpenAI API) | ❌ Tidak tersedia gratis — berbayar, butuh key + izin user |
 | YouTube | ⏳ Channel @stonecrafttt ada; rebrand menunggu keputusan user |
 
+## Hasil Tahap 3 (uji video 30 detik, 20 Nov 2026)
+
+- Video: gajah kecil biru, 3 adegan, lirik tersinkron, melodi orisinal
+  hasil sintesis sendiri. Mesin: `scripts/render_test30.py` (Pillow + numpy + ffmpeg).
+- 720p: 30,00 dtk, H.264 + AAC, 1.424.706 byte, render 11,1 dtk, puncak RAM 96,7 MB.
+- 1080p: 30,00 dtk, H.264 + AAC, 1.805.465 byte, render 21,9 dtk, puncak RAM 114,4 MB.
+- Pengujian A–H: 8/8 lolos (durasi, 3 adegan, gerakan, teks tepat waktu,
+  audio sinkron, bisa diputar/decode OK, resolusi + ukuran, waktu + RAM).
+  8 frame dicek visual langsung.
+
 ## Batasan yang diketahui
 
 - **RAM ketat:** tersedia ~500 MB saat audit. Jangan menjalankan dua pekerjaan berat
