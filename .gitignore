@@ -1,0 +1,38 @@
+# Video, audio, model, dan hasil besar tidak masuk repo.
+# Repo ini hanya untuk kode, konfigurasi, dokumentasi, dan template.
+
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.webm
+*.mp3
+*.wav
+*.flac
+*.ogg
+*.blend
+*.blend1
+*.png
+*.jpg
+*.jpeg
+# (Gambar referensi karakter & aset visual disimpan di Drive / folder kerja, bukan repo.)
+
+# Model AI & build
+*.gguf
+*.ggml
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+build/
+dist/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# File kerja lokal
+*.tmp
+*.log
+.DS_Store
